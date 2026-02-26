@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
 const NEWS_API_KEY = process.env.NEWS_API_KEY || '';
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, '../data.json');
