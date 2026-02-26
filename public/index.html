@@ -1099,13 +1099,19 @@ Message structure:
   }
 
   // ─── LOAD LATEST DEBATE ──────────────────────────────────────────────────────
+  let lastMessageCount = 0;
+
   async function loadLatest() {
     const res = await api('/debates/latest');
     if (res.success && res.data) {
-      if (res.data.id !== lastDebateId) {
-        lastDebateId = res.data.id;
-        renderDebate(res.data);
-        if (lastDebateId !== null) showToast('🔴 New debate started!');
+      const debate = res.data;
+      const msgCount = debate.messages ? debate.messages.length : 0;
+      if (debate.id !== lastDebateId || msgCount !== lastMessageCount) {
+        const isNewDebate = debate.id !== lastDebateId;
+        lastDebateId = debate.id;
+        lastMessageCount = msgCount;
+        renderDebate(debate);
+        if (isNewDebate) showToast('🔴 New debate started!');
       }
     }
   }
